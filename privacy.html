@@ -35,6 +35,7 @@
         <p>Aplikace žádá rozsah <code>https://www.googleapis.com/auth/gmail.readonly</code>. Toto oprávnění technicky umožňuje čtení celé schránky. Výběr reportů omezuje aplikační kód; nejde o omezení oprávnění pouze na vybranou složku nebo odesílatele.</p>
         <p>Údaje slouží k ověření reportové zprávy, načtení vybraného dne a zobrazení výrobních tabulek uživateli aplikace. Čtecí integrace neposílá zprávy, nemaže je, nepřesouvá a neoznačuje jako přečtené.</p>
         <p>Samostatná příprava reportu z firemních zdrojů a jeho odeslání do schránky používají oddělená oprávnění. Gmailová integrace popsaná zde slouží k příjmu a zobrazení již doručeného reportu.</p>
+        <p>Datová aplikace podporuje také samostatné firemní přihlášení přes Microsoft 365 (Entra ID). Je-li aktivované, žádá pouze přihlašovací rozsahy <code>openid profile</code>. Ověřuje organizaci a neměnné uživatelské Object ID proti výslovnému seznamu povolených účtů. Microsoft může v přihlašovacím tokenu vrátit i základní profilové údaje; e-mail ani zobrazované jméno neslouží k povolení přístupu. Heslo zadáváte Microsoftu, nikoli této aplikaci. Přihlášení kolegy nepovoluje čtení jeho pošty.</p>
       </section>
       <section>
         <h2>4. Uložení a doba uchovávání</h2>
@@ -42,11 +43,13 @@
         <p>Na serveru aplikace je paměťová cache nejvýše osmi denních reportů. Platnost pro opakované použití je jedna minuta; po jejím uplynutí další požadavek znovu čte Gmail. Uplynutí této minuty samo o sobě není okamžikem výmazu obsahu z paměti. Kopie se odstraní při nahrazení dalšími reporty nebo při ukončení či restartu serverového procesu.</p>
         <p>Gmailová integrace nevytváří trvalý export příloh na serverový disk ani do Git repozitáře. Report se předává prohlížeči jako součást stránky; server nastavuje <code>Cache-Control: no-store</code>. Zobrazený obsah má uživatel dostupný v otevřené stránce. Uložení nebo tisk reportu uživatelem vytváří samostatnou kopii pod jeho kontrolou.</p>
         <p>OAuth klientské tajemství a obnovovací token jsou uloženy v neveřejných Secrets provozního prostředí. Přístupové tokeny se používají na serveru; tajemství se nepředávají klientskému JavaScriptu.</p>
+        <p>Při zapnutém firemním přihlášení datová aplikace používá dvě nezbytné cookies: jednu pro spojení rozpracovaného přihlášení s prohlížečem (nejvýše deset minut) a druhou s náhodným identifikátorem přihlášené relace. Relace je uložená pouze v paměti serveru spolu s uživatelským Object ID a časem vypršení. Platí nejvýše osm hodin, nejdéle do expirace ověřeného ID tokenu. Cookies jsou <code>Secure</code>, <code>HttpOnly</code> a <code>SameSite=Lax</code>; neobsahují přihlašovací token Microsoftu. Odhlášení ruší aktuální relaci, restart serveru ruší všechny relace.</p>
       </section>
       <section>
         <h2>5. Předávání údajů a přístup lidí</h2>
         <p>Načtené údaje se zpracovávají na serveru provozovatele a zobrazují v prohlížeči návštěvníka datové aplikace. V současném provozu je server umístěn v GitHub Codespaces. Provozovatel řídí přístup ke Codespacu a jeho portům; samotný Gmail token nezavádí přihlašování uživatelů do aplikace.</p>
         <p>Google zajišťuje schránku a Gmail API, GitHub zajišťuje zvolenou serverovou infrastrukturu. Jejich služby se řídí také <a href="https://policies.google.com/privacy">zásadami Googlu</a> a <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">zásadami GitHubu</a>.</p>
+        <p>Je-li zapnuté firemní přihlášení, Microsoft zajišťuje ověření identity podle pravidel firemní organizace a <a href="https://privacy.microsoft.com/privacystatement">zásad ochrany údajů Microsoftu</a>. Přístup kolegovi lze odebrat odstraněním jeho Object ID z povoleného seznamu a restartem serveru; tím se odstraní také jeho dříve vytvořené relace.</p>
         <p>Údaje z Gmailu se neprodávají, nepoužívají pro reklamu ani pro trénování zobecněných modelů umělé inteligence. Gmailová integrace nepředává obsah zpráv do modelů umělé inteligence. Lidé mohou k údajům přistupovat jako oprávnění uživatelé reportu nebo při výslovně povolené podpoře, řešení bezpečnostního incidentu či plnění právní povinnosti.</p>
       </section>
       <section>
