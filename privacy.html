@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Zásady ochrany údajů aplikace Enaspol reporty: přístup ke Gmailu, účel zpracování, uchovávání a odvolání souhlasu.">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+    <title>Ochrana údajů | Enaspol reporty</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#obsah">Přejít na obsah</a>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">ER</span>Enaspol reporty</a>
+      <nav aria-label="Hlavní navigace"><a href="index.html">O aplikaci</a><a href="privacy.html" aria-current="page">Ochrana údajů</a><a href="terms.html">Podmínky použití</a></nav>
+    </header>
+    <main class="document" id="obsah">
+      <p class="eyebrow">Enaspol reporty · Platnost od 2. 11. 2026</p>
+      <h1>Zásady ochrany údajů</h1>
+      <p class="lead">Jak aplikace přistupuje k reportům v Gmailu, k čemu je používá a jak přístup zrušit.</p>
+      <section>
+        <h2>1. Provozovatel a kontakt</h2>
+        <p>Provozovatelem této instance aplikace Enaspol reporty je Petr Žid. Dotazy ke zpracování údajů, přístupům a odstranění pracovních kopií zasílejte na <a href="mailto:zidpetr87@gmail.com">zidpetr87@gmail.com</a>.</p>
+        <p>Aplikace je určena k internímu zobrazení výrobních reportů. Tento veřejný informační web poskytuje popis aplikace, její podmínky a zásady ochrany údajů.</p>
+      </section>
+      <section>
+        <h2>2. Jaké údaje aplikace načítá</h2>
+        <p>Po udělení souhlasu aplikace ověří e-mailovou adresu připojeného Google účtu. V Gmailu hledá zprávy podle nastaveného odesílatele a příjemce, předmětu, data reportu a názvu TXT přílohy.</p>
+        <p>U odpovídajících zpráv načítá hlavičky včetně výsledku ověření odesílatele, technické údaje zprávy a příloh, čas přijetí a obsah reportové přílohy. Gmail může při načtení celé zprávy vrátit také její tělo a metadata dalších příloh; aplikace tělo pro sestavení přehledu nevyužívá.</p>
+        <p>Obsah reportu může zahrnovat výrobní operace, výsledky analýz, provozní poznámky a údaje o zásobnících. Případné osobní údaje obsažené v zaslaném reportu se zpracují jako součást tohoto podkladu.</p>
+      </section>
+      <section>
+        <h2>3. Oprávnění a účel použití</h2>
+        <p>Aplikace žádá rozsah <code>https://www.googleapis.com/auth/gmail.readonly</code>. Toto oprávnění technicky umožňuje čtení celé schránky. Výběr reportů omezuje aplikační kód; nejde o omezení oprávnění pouze na vybranou složku nebo odesílatele.</p>
+        <p>Údaje slouží k ověření reportové zprávy, načtení vybraného dne a zobrazení výrobních tabulek uživateli aplikace. Čtecí integrace neposílá zprávy, nemaže je, nepřesouvá a neoznačuje jako přečtené.</p>
+        <p>Samostatná příprava reportu z firemních zdrojů a jeho odeslání do schránky používají oddělená oprávnění. Gmailová integrace popsaná zde slouží k příjmu a zobrazení již doručeného reportu.</p>
+      </section>
+      <section>
+        <h2>4. Uložení a doba uchovávání</h2>
+        <p>Původní zprávy a přílohy zůstávají v Gmailu do doby, než je vlastník schránky odstraní podle nastavení svého účtu. Aplikace jejich odstranění neprovádí.</p>
+        <p>Na serveru aplikace je paměťová cache nejvýše osmi denních reportů. Platnost pro opakované použití je jedna minuta; po jejím uplynutí další požadavek znovu čte Gmail. Uplynutí této minuty samo o sobě není okamžikem výmazu obsahu z paměti. Kopie se odstraní při nahrazení dalšími reporty nebo při ukončení či restartu serverového procesu.</p>
+        <p>Gmailová integrace nevytváří trvalý export příloh na serverový disk ani do Git repozitáře. Report se předává prohlížeči jako součást stránky; server nastavuje <code>Cache-Control: no-store</code>. Zobrazený obsah má uživatel dostupný v otevřené stránce. Uložení nebo tisk reportu uživatelem vytváří samostatnou kopii pod jeho kontrolou.</p>
+        <p>OAuth klientské tajemství a obnovovací token jsou uloženy v neveřejných Secrets provozního prostředí. Přístupové tokeny se používají na serveru; tajemství se nepředávají klientskému JavaScriptu.</p>
+      </section>
+      <section>
+        <h2>5. Předávání údajů a přístup lidí</h2>
+        <p>Načtené údaje se zpracovávají na serveru provozovatele a zobrazují v prohlížeči návštěvníka datové aplikace. V současném provozu je server umístěn v GitHub Codespaces. Provozovatel řídí přístup ke Codespacu a jeho portům; samotný Gmail token nezavádí přihlašování uživatelů do aplikace.</p>
+        <p>Google zajišťuje schránku a Gmail API, GitHub zajišťuje zvolenou serverovou infrastrukturu. Jejich služby se řídí také <a href="https://policies.google.com/privacy">zásadami Googlu</a> a <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">zásadami GitHubu</a>.</p>
+        <p>Údaje z Gmailu se neprodávají, nepoužívají pro reklamu ani pro trénování zobecněných modelů umělé inteligence. Gmailová integrace nepředává obsah zpráv do modelů umělé inteligence. Lidé mohou k údajům přistupovat jako oprávnění uživatelé reportu nebo při výslovně povolené podpoře, řešení bezpečnostního incidentu či plnění právní povinnosti.</p>
+      </section>
+      <section>
+        <h2>6. Pravidla Google a Limited Use</h2>
+        <p>Použití informací přijatých prostřednictvím Google API a rozsahů Google Workspace v aplikaci Enaspol reporty se řídí <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a> a <a href="https://developers.google.com/workspace/workspace-api-user-data-developer-policy">Google Workspace API User Data and Developer Policy</a>, včetně požadavků Limited Use.</p>
+      </section>
+      <section>
+        <h2>7. Odvolání přístupu a odstranění údajů</h2>
+        <ol>
+          <li>Otevřete <a href="https://myaccount.google.com/connections">připojení ve svém Google účtu</a>, vyberte tuto aplikaci a odeberte její přístup.</li>
+          <li>Provozovatel odstraní uložený obnovovací token ze Secrets a restartuje server, aby odstranil i paměťovou cache. Již otevřené reporty v prohlížeči zavřete.</li>
+          <li>Pokud chcete odstranit i původní zprávy, smažte je v Gmailu včetně koše. Případné vlastní exporty nebo vytištěné kopie spravujte samostatně.</li>
+        </ol>
+        <p>Odebrání přístupu zastaví budoucí čtení Google účtu; samo neodstraní již doručené zprávy ani dříve vytvořené kopie. Pro dotazy, opravu nebo odstranění pracovních kopií kontaktujte <a href="mailto:zidpetr87@gmail.com">zidpetr87@gmail.com</a>.</p>
+      </section>
+      <section>
+        <h2>8. Veřejný informační web</h2>
+        <p>Informační stránky nepoužívají analytické ani reklamní skripty, formuláře nebo aplikační cookies. Hostitel GitHub Pages může pro zabezpečení evidovat technické údaje návštěvy včetně IP adresy podle svých zásad ochrany údajů. Z tohoto webu se nepřipojujete ke své schránce ani k reportovému serveru.</p>
+      </section>
+      <section>
+        <h2>9. Změny zásad</h2>
+        <p>Aktuální znění a datum platnosti jsou uvedeny na této stránce. Při změně účelu zpracování nebo požadovaných oprávnění provozovatel aktualizuje informace a vyžádá nový souhlas, pokud je potřebný.</p>
+      </section>
+      <a class="back-link" href="index.html">← Zpět na informace o aplikaci</a>
+    </main>
+    <footer class="site-footer"><span>Enaspol reporty · Ochrana údajů</span><div><a href="index.html">O aplikaci</a><a href="terms.html">Podmínky použití</a></div></footer>
+  </body>
+</html>
